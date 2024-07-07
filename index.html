@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Criptografar Texto...">
+    <link rel="apple-touch-icon" sizes="180x180" href="Public/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Public/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="Public/favicon-16x16.png">
+    <link rel="manifest" href="Public/site.webmanifest">
+    <link rel="stylesheet" href="Css/styles.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+    <script src="./Plugins/Modal.js" defer></script>
+    <script src="./Js/Assistent.js" defer></script>
+    <script src="./Plugins/Import.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="./db/src/LocalDB.js"></script>
+
+    <title>CripTexto</title>
+</head>
+
+<body>
+    <div class="area">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+    <div id="modal-configuration" class="modal-configuration">
+        <div class="modal-content-configuration">
+            <span class="close">&times;</span>
+            <h2>Configuração</h2>
+            <div class="configuration-content">
+                <div class="configuration-label-checkbox">
+                    <label class="switch">
+                        <input type="checkbox" id="letras" checked>
+                        <span class="slider"></span>
+                    </label>
+                    <label>Ativar Letras</label>
+                </div>
+                <div class="configuration-label-checkbox">
+                    <label class="switch">
+                        <input type="checkbox" id="numeros" checked>
+                        <span class="slider"></span>
+                    </label>
+                    <label>Ativar Numeros</label>
+                </div>
+                <div class="configuration-label-checkbox">
+                    <label class="switch">
+                        <input type="checkbox" id="simbolos" checked>
+                        <span class="slider"></span>
+                    </label>
+                    <label>Ativar Simbolos</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="modal-skins" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Modelos de Templates</h2>
+            <div class="container-iframes-templates">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-import" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Extensões Aceitas</h2>
+            <div class="sd-import">
+                <div class="sd_import_button">
+                    <button data-type="txt">TXT</button>
+                </div>
+                <div class="sd_import_button">
+                    <button data-type="pdf">PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-history" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Historico de Templates</h2>
+            <div class="history">
+                <table id="template-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome da Template</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Linhas da tabela serão inseridas dinamicamente aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-paint" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Desenhar Template</h2>
+
+            <div class="paint">
+                <div class="modal_paint_tools" style="position: relative;">
+                    <div class="panel-security">
+                        <span class="close_panel">&times;</span>
+                        <h4>Configurações de Download 📦</h4>
+                        <input type="text" id="name_docs" placeholder="Nome do Documento ..." value="documento">
+                        <input type="password" id="password" name="Senha do Documento ..." placeholder="Password">
+                        <!-- <button type="submit">Salvar Configurações</button> -->
+                    </div>
+                    <div class="entry-paint">
+                        <input type="text" id="text_seacher" placeholder="Criar Template..." maxlength="20" />
+                        <button class="search-find-template">🔎</button>
+                    </div>
+                    <div style="display: flex; position: relative;">
+
+                        <button class="container-descriptografia_header_actions_footer_link_skin"
+                            id="openConfigSecurity">
+                            Security
+                            <img src="./Assets/Icons/encrip.svg" alt="Icon de Link" />
+                        </button>
+                        <button class="container-descriptografia_header_actions_footer_link_skin">
+                            Fullscreen
+                            <img src="./Assets/Icons/ArrowLink.svg" alt="Icon de Link" />
+                        </button>
+                    </div>
+                    <div class="panel">
+                        <select class="save-options" id="select-method-save-paint">
+                            <option value="save-html">Salvar HTML</option>
+                            <option value="save-pdf">Salvar PDF</option>
+                            <option value="save-pdf-password">Salvar PDF + Senha</option>
+                        </select>
+                    </div>
+                    <div class="container-save-paint">
+                        <button id="insert-data">Salvar</button>
+                    </div>
+                    <div class="container-save-paint">
+                        <button id="download_btn" class="download_btn">Baixar</button>
+                    </div>
+
+                </div>
+                <div class="modal_paint_view"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-components-strt">
+        <!-- Navegação -->
+        <header class="container-header">
+            <nav class="navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </nav>
+        </header>
+        <!-- Conteudo Actions -->
+        <section class="container-actions">
+            <div class="container-menu-history">
+                <div class="menu-tools">
+                    <div class="menu-tools_Buttons">
+                        <p> Escreva um texto e aperte no cadeado para criptografar</p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="container-criptografia">
+                <div class="container-criptografia_header_actions">
+                    <div class="container-criptografia_header_actions_buttons">
+                        <button id="gooey-button" class="openModalImport">
+                            Importar
+                            <span class="bubbles">
+                                <span class="bubble"></span>
+                                <span class="bubble"></span>
+                                <span class="bubble"></span>
+                                <span class="bubble"></span>
+                                <span class="bubble"></span>
+                                <span class="bubble"></span>
+                                <span class="bubble"></span>
+                                <span class="bubble"></span>
+                                <span class="bubble"></span>
+                                <span class="bubble"></span>
+                            </span>
+                            <img src="./Assets/Icons/Import.svg" alt="icon Ferramentas" />
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                                <defs>
+                                    <filter id="gooey">
+                                        <!-- in="sourceGraphic" -->
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                                        <feColorMatrix in="blur" type="matrix"
+                                            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                                            result="highContrastGraphic" />
+                                        <feComposite in="SourceGraphic" in2="highContrastGraphic" operator="atop" />
+                                    </filter>
+                                </defs>
+                            </svg>
+                        </button>
+
+                       
+                    </div>
+                </div>
+
+                <div class="container-criptografia_header_actions_cripto_texto">
+                    <textarea placeholder="Digite seu Texto..." id="texto_codificar"></textarea>
+                </div>
+
+                <div class="container-criptografia_header_actions_footer">
+                    <div class="container-criptografia_header_actions_footer_button">
+                        <button class="criptografar">
+                            <img src="./Assets/Icons/PadLock_Open.svg" </button>
+                    </div>
+                    <div class="container-criptografia_header_actions_footer_button">
+                        <button class="descriptografar">
+                            <img src="./Assets/Icons/PadLock_Close.svg" </button>
+                    </div>
+                </div>
+            </div>
+            <div class="container-descriptografia">
+                <div class="container-descriptografia_header_actions">
+                    <div class="container-descriptografia_header_actions_title">
+                        <h1>Codigo Gerado</h1>
+                    </div>
+                </div>
+                <div class="container-descriptografar_header_actions_cripto_texto">
+                    <textarea disabled id="texto_codificado"></textarea>
+                </div>
+                            <div class="container-descriptografia_header_actions_footer">
+                    <div class="container-descriptografar_header_actions_footer_button">
+                        <button class="copiar">
+                            Copiar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        window.jsPDF = window.jspdf.jsPDF;
+    </script>
+
+    <script src="./Js/Configuration.js"></script>
+    <script src="./Js/Download.js"></script>
+    <script src="./Js/Criptografar.js"></script>
+    <script src="./Js/Descriptografar.js"></script>
+    <script src="./Js/Commands.js"></script>
+    <script src="./Js/Templates.js"></script>
+    <script src="./Js/banco_dados.js"></script>
+</body>
+
+</html>
